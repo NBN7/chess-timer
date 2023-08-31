@@ -3,9 +3,11 @@ import { HTMLAttributes } from "react";
 interface Props extends HTMLAttributes<HTMLDivElement> {
   player: boolean;
   turn: boolean;
+  minutes: number;
+  seconds: number;
 }
 
-export const Board = ({ player, turn, onClick }: Props) => {
+export const Board = ({ player, turn, onClick, minutes, seconds }: Props) => {
   return (
     <>
       {player ? (
@@ -14,11 +16,13 @@ export const Board = ({ player, turn, onClick }: Props) => {
           style={turn ? { pointerEvents: "none" } : {}}
           className={
             turn
-              ? `flex items-center justify-center w-full h-[300px] bg-gray-600 rounded-b-2xl`
-              : `flex items-center justify-center w-full h-[300px] bg-red-600 rounded-b-2xl`
+              ? `flex items-center justify-center w-full h-[500px] bg-gray-400 rounded-b-2xl`
+              : `flex items-center justify-center w-full h-[500px] gradient rounded-b-2xl`
           }
         >
-          <span className="text-5xl">15 : 00</span>
+          <span className="text-5xl">
+            {minutes}:{seconds}
+          </span>
         </div>
       ) : (
         <div
@@ -26,11 +30,13 @@ export const Board = ({ player, turn, onClick }: Props) => {
           style={turn ? { pointerEvents: "none" } : {}}
           className={
             turn
-              ? `flex items-center justify-center w-full h-[300px] bg-gray-600 rounded-t-2xl`
-              : `flex items-center justify-center w-full h-[300px] bg-red-600 rounded-t-2xl`
+              ? `flex items-center justify-center w-full h-[500px] gradient-disable rounded-t-2xl`
+              : `flex items-center justify-center w-full h-[500px] gradient rounded-t-2xl`
           }
         >
-          <span className="text-5xl">15 : 00</span>
+          <span className="text-5xl">
+            {minutes}:{seconds}
+          </span>
         </div>
       )}
     </>
