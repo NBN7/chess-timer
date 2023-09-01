@@ -6,24 +6,39 @@ import { Configuration } from "./components/Configuration";
 
 function App() {
   const [turn, setTurn] = useState(false);
-  const [start, setStart] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const [settings, setSettings] = useState(false);
 
   const [timer1, setTimer1] = useState(300000);
+  const [isTimer1Running, setIsTimer1Running] = useState(false);
+
+  const [timer2, setTimer2] = useState(300000);
+  const [isTimer2Running, setIsTimer2Running] = useState(false);
 
   const selectedTime = useRef(300000);
-  const intervalRef = useRef<ReturnType<typeof setInterval>>();
+  const intervalRef1 = useRef<ReturnType<typeof setInterval>>();
+  const intervalRef2 = useRef<ReturnType<typeof setInterval>>();
 
   const toggleTurn = () => {
     setTurn((prev) => !prev);
+    if (isTimer1Running) {
+      setIsTimer1Running((prev) => !prev);
+      setIsTimer2Running((prev) => !prev);
+      return;
+    }
+    setIsTimer1Running((prev) => !prev);
+    setIsTimer2Running((prev) => !prev);
   };
 
+  // -------- CONTROL PAD --------
   const togglePause = () => {
-    setStart((prev) => !prev);
+    setIsStarted((prev) => !prev);
+    setIsTimer1Running((prev) => !prev);
   };
 
   const handleRestart = () => {
     setTimer1(selectedTime.current);
+    setTimer2(selectedTime.current);
   };
 
   const handleSettings = () => {
@@ -32,25 +47,48 @@ function App() {
 
   const handleTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setTimer1(parseInt(e.target.value));
+    setTimer2(parseInt(e.target.value));
     selectedTime.current = parseInt(e.target.value);
   };
+  // -------- CONTROL PAD --------
 
+  // -------- TIMERS --------
   useEffect(() => {
-    if (start) {
-      intervalRef.current = setInterval(() => {
+    if (isTimer1Running) {
+      intervalRef1.current = setInterval(() => {
         setTimer1((prev) => prev - 1000);
       }, 1000);
     } else {
-      clearInterval(intervalRef.current);
+      clearInterval(intervalRef1.current);
     }
-  }, [start]);
+  }, [isTimer1Running]);
 
   useEffect(() => {
-    if (timer1 === 0) {
-      clearInterval(intervalRef.current);
+    if (isTimer2Running) {
+      intervalRef2.current = setInterval(() => {
+        setTimer2((prev) => prev - 1000);
+      }, 1000);
+    } else {
+      clearInterval(intervalRef2.current);
     }
-    console.log(timer1 / 1000);
+  }, [isTimer2Running]);
+  // -------- TIMERS --------
+
+  // -------- CHECK IF TIMER IS ZERO --------
+  useEffect(() => {
+    if (timer1 === 0) {
+      clearInterval(intervalRef1.current);
+    }
+    console.log("timer 1", timer1 / 1000);
   }, [timer1]);
+
+  useEffect(() => {
+    if (timer2 === 0) {
+      clearInterval(intervalRef2.current);
+    }
+    console.log("timer 2", timer2 / 1000);
+  }, [timer2]);
+  // -------- CHECK IF TIMER IS ZERO --------
 
   return (
     <>
@@ -67,12 +105,12 @@ function App() {
           handleRestart={handleRestart}
           handleSettings={handleSettings}
           onClick={togglePause}
-          start={start}
+          start={isStarted}
         />
 
         <Board
-          minutes={Math.floor(timer1 / 60 / 1000)}
-          seconds={Math.floor(timer1 / 1000)}
+          minutes={Math.floor(timer2 / 60 / 1000)}
+          seconds={Math.floor(timer2 / 1000)}
           onClick={toggleTurn}
           player={true}
           turn={!turn}
