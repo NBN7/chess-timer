@@ -11,6 +11,7 @@ function App() {
 
   const [timer1, setTimer1] = useState(300000);
 
+  const selectedTime = useRef(300000);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
   const toggleTurn = () => {
@@ -21,7 +22,9 @@ function App() {
     setStart((prev) => !prev);
   };
 
-  const handleRestart = () => {};
+  const handleRestart = () => {
+    setTimer1(selectedTime.current);
+  };
 
   const handleSettings = () => {
     setSettings((prev) => !prev);
@@ -29,6 +32,7 @@ function App() {
 
   const handleTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setTimer1(parseInt(e.target.value));
+    selectedTime.current = parseInt(e.target.value);
   };
 
   useEffect(() => {
