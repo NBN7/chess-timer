@@ -4,13 +4,13 @@ import { VscDebugRestart } from "react-icons/vsc";
 import { MdSettings } from "react-icons/md";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  isPaused: boolean;
+  start: boolean;
   handleRestart: Function;
   handleSettings: Function;
 }
 
 export const ControlPad = ({
-  isPaused,
+  start,
   onClick,
   handleRestart,
   handleSettings,
@@ -18,7 +18,7 @@ export const ControlPad = ({
   return (
     <div className="w-full p-4 flex items-center justify-around">
       <VscDebugRestart onClick={handleRestart} size="25px" />
-      {isPaused ? (
+      {start ? (
         <>
           <BsPauseFill onClick={onClick} size="35px" />
         </>

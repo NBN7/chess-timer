@@ -6,7 +6,7 @@ import { Configuration } from "./components/Configuration";
 
 function App() {
   const [turn, setTurn] = useState(false);
-  const [pause, setPause] = useState(false);
+  const [start, setStart] = useState(false);
   const [settings, setSettings] = useState(false);
 
   const [timer1, setTimer1] = useState(300000);
@@ -18,10 +18,7 @@ function App() {
   };
 
   const togglePause = () => {
-    setPause((prev) => !prev);
-    intervalRef.current = setInterval(() => {
-      setTimer1((prev) => prev - 1000);
-    }, 1000);
+    setStart((prev) => !prev);
   };
 
   const handleRestart = () => {};
@@ -33,6 +30,16 @@ function App() {
   const handleTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setTimer1(parseInt(e.target.value));
   };
+
+  useEffect(() => {
+    if (start) {
+      intervalRef.current = setInterval(() => {
+        setTimer1((prev) => prev - 1000);
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+  }, [start]);
 
   useEffect(() => {
     if (timer1 === 0) {
@@ -56,7 +63,7 @@ function App() {
           handleRestart={handleRestart}
           handleSettings={handleSettings}
           onClick={togglePause}
-          isPaused={pause}
+          start={start}
         />
 
         <Board
