@@ -3,8 +3,9 @@ import { HTMLAttributes } from "react";
 interface Props extends HTMLAttributes<HTMLDivElement> {
   player: boolean;
   turn: boolean;
+  time?: number;
   minutes: number;
-  seconds: number;
+  seconds?: number;
 }
 
 export const Board = ({ player, turn, onClick, minutes, seconds }: Props) => {
@@ -21,7 +22,7 @@ export const Board = ({ player, turn, onClick, minutes, seconds }: Props) => {
           }
         >
           <span className="text-5xl">
-            {minutes}:{seconds}
+            {minutes} {seconds}
           </span>
         </div>
       ) : (
@@ -34,8 +35,8 @@ export const Board = ({ player, turn, onClick, minutes, seconds }: Props) => {
               : `flex items-center justify-center w-full h-[500px] gradient rounded-t-2xl`
           }
         >
-          <span className="text-5xl">
-            {minutes}:{seconds}
+          <span className="text-5xl rotate-180">
+            {minutes} {seconds}
           </span>
         </div>
       )}

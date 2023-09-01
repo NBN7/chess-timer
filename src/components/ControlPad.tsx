@@ -1,17 +1,23 @@
 import { HTMLAttributes } from "react";
 import { BsPlayFill, BsPauseFill } from "react-icons/bs";
 import { VscDebugRestart } from "react-icons/vsc";
-import { BiSolidTime } from "react-icons/bi";
-
+import { MdSettings } from "react-icons/md";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   isPaused: boolean;
+  handleRestart: Function;
+  handleSettings: Function;
 }
 
-export const ControlPad = ({ isPaused, onClick }: Props) => {
+export const ControlPad = ({
+  isPaused,
+  onClick,
+  handleRestart,
+  handleSettings,
+}: Props) => {
   return (
     <div className="w-full p-4 flex items-center justify-around">
-      <VscDebugRestart size="27px" />
+      <VscDebugRestart onClick={handleRestart} size="25px" />
       {isPaused ? (
         <>
           <BsPauseFill onClick={onClick} size="35px" />
@@ -19,7 +25,7 @@ export const ControlPad = ({ isPaused, onClick }: Props) => {
       ) : (
         <BsPlayFill onClick={onClick} size="35px" />
       )}
-      <BiSolidTime size="25px" />
+      <MdSettings onClick={handleSettings} size="25px" />
     </div>
   );
 };
