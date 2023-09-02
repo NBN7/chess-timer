@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, ChangeEvent } from "react";
+import { useState, useEffect, useRef, useCallback, ChangeEvent } from "react";
 
 import { Board } from "./components/Board";
 import { ControlPad } from "./components/ControlPad";
-import { Configuration } from "./components/Configuration";
+import { Settings } from "./components/Settings";
 
 function App() {
   const [turn, setTurn] = useState(false);
@@ -33,7 +33,7 @@ function App() {
   };
 
   // -------- CONTROL PAD --------
-  const togglePause = () => {
+  const togglePause = useCallback(() => {
     if (isStarted) {
       setIsTimer1Running(false);
       setIsTimer2Running(false);
@@ -46,9 +46,9 @@ function App() {
     } else {
       setIsTimer2Running((prev) => !prev);
     }
-  };
+  }, [isStarted]);
 
-  const handleRestart = () => {
+  const handleRestart = useCallback(() => {
     setTimer1(selectedTime.current);
     setTimer2(selectedTime.current);
 
@@ -56,23 +56,28 @@ function App() {
     setIsTimer2Running(false);
     setIsStarted(false);
     setTurn(false);
-  };
+  }, []);
 
-  const handleSettings = () => {
+  const handleSettings = useCallback(() => {
     setSettings((prev) => !prev);
-  };
+  }, []);
+
   // -------- CONTROL PAD --------
 
   // -------- SETTINGS --------
-  const handleTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleTimeChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     setTimer1(parseInt(e.target.value));
     setTimer2(parseInt(e.target.value));
     selectedTime.current = parseInt(e.target.value);
-  };
+  }, []);
 
-  const handleBonusTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    selectedBonusTime.current = parseInt(e.target.value);
-  };
+  const handleBonusTimeChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      selectedBonusTime.current = parseInt(e.target.value);
+    },
+    []
+  );
+
   // -------- SETTINGS --------
 
   // -------- TIMERS --------
@@ -113,7 +118,7 @@ function App() {
 
   return (
     <>
-      <main className="flex flex-col justify-between w-full h-screen">
+      <main className="flex flex-col justify-between w-full h-screen overflow-hidden">
         <Board
           minutes={Math.floor(timer1 / 60 / 1000)}
           seconds={Math.floor(timer1 / 1000)}
@@ -140,7 +145,7 @@ function App() {
         />
 
         {settings && (
-          <Configuration
+          <Settings
             handleSettings={handleSettings}
             handleTimeChange={handleTimeChange}
             handleBonusTimeChange={handleBonusTimeChange}
