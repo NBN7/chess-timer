@@ -16,6 +16,8 @@ function App() {
   const [isTimer2Running, setIsTimer2Running] = useState(false);
 
   const selectedTime = useRef(300000);
+  const selectedBonusTime = useRef(3000);
+
   const intervalRef1 = useRef<ReturnType<typeof setInterval>>();
   const intervalRef2 = useRef<ReturnType<typeof setInterval>>();
 
@@ -32,25 +34,46 @@ function App() {
 
   // -------- CONTROL PAD --------
   const togglePause = () => {
+    if (isStarted) {
+      setIsTimer1Running(false);
+      setIsTimer2Running(false);
+      setIsStarted((prev) => !prev);
+      return;
+    }
     setIsStarted((prev) => !prev);
-    setIsTimer1Running((prev) => !prev);
+    if (!turn) {
+      setIsTimer1Running((prev) => !prev);
+    } else {
+      setIsTimer2Running((prev) => !prev);
+    }
   };
 
   const handleRestart = () => {
     setTimer1(selectedTime.current);
     setTimer2(selectedTime.current);
+
+    setIsTimer1Running(false);
+    setIsTimer2Running(false);
+    setIsStarted(false);
+    setTurn(false);
   };
 
   const handleSettings = () => {
     setSettings((prev) => !prev);
   };
+  // -------- CONTROL PAD --------
 
+  // -------- SETTINGS --------
   const handleTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setTimer1(parseInt(e.target.value));
     setTimer2(parseInt(e.target.value));
     selectedTime.current = parseInt(e.target.value);
   };
-  // -------- CONTROL PAD --------
+
+  const handleBonusTimeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    selectedBonusTime.current = parseInt(e.target.value);
+  };
+  // -------- SETTINGS --------
 
   // -------- TIMERS --------
   useEffect(() => {
@@ -79,14 +102,12 @@ function App() {
     if (timer1 === 0) {
       clearInterval(intervalRef1.current);
     }
-    console.log("timer 1", timer1 / 1000);
   }, [timer1]);
 
   useEffect(() => {
     if (timer2 === 0) {
       clearInterval(intervalRef2.current);
     }
-    console.log("timer 2", timer2 / 1000);
   }, [timer2]);
   // -------- CHECK IF TIMER IS ZERO --------
 
@@ -99,6 +120,7 @@ function App() {
           onClick={toggleTurn}
           player={false}
           turn={turn}
+          gameStart={isStarted}
         />
 
         <ControlPad
@@ -114,12 +136,14 @@ function App() {
           onClick={toggleTurn}
           player={true}
           turn={!turn}
+          gameStart={isStarted}
         />
 
         {settings && (
           <Configuration
             handleSettings={handleSettings}
             handleTimeChange={handleTimeChange}
+            handleBonusTimeChange={handleBonusTimeChange}
           />
         )}
       </main>
