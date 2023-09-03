@@ -5,20 +5,42 @@ import { ControlPad } from "./components/ControlPad";
 import { Settings } from "./components/Settings";
 
 function App() {
+  // turn : false = player 1
+  // turn : true = player 2
   const [turn, setTurn] = useState(false);
+
+  // isStarted : false = game stopped
+  // isStarted : true = game started
   const [isStarted, setIsStarted] = useState(false);
+
+  // settings : false = settings window hide
+  // settings : true = settings window show
   const [settings, setSettings] = useState(false);
 
+  // player 1 timer
   const [timer1, setTimer1] = useState(300000);
+
+  // isTimer1Running : false = player 1 timer is not running
+  // isTimer1Running : true = player 1 timer is running
   const [isTimer1Running, setIsTimer1Running] = useState(false);
 
+  // isTimer2Running : false = player 2 timer is not running
+  // isTimer2Running : true = player 2 timer is running
   const [timer2, setTimer2] = useState(300000);
+
+  // isTimer2Running : true = player 2 timer is not running
   const [isTimer2Running, setIsTimer2Running] = useState(false);
 
+  // selectedTime : default time
   const selectedTime = useRef(300000);
+
+  // selectedBonusTime : default bonus time
   const selectedBonusTime = useRef(3000);
 
+  // player 1 timer interval
   const intervalRef1 = useRef<ReturnType<typeof setInterval>>();
+
+  // player 2 timer interval
   const intervalRef2 = useRef<ReturnType<typeof setInterval>>();
 
   const toggleTurn = () => {
