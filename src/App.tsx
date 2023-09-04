@@ -125,8 +125,16 @@ function App() {
   // -------- TIMERS --------
 
   // -------- BONUS TIME --------
+  useEffect(() => {
+    if (isStarted) {
+      if (turn) {
+        setTimer1((prev) => prev + selectedBonusTime.current);
+        return;
+      }
+      setTimer2((prev) => prev + selectedBonusTime.current);
+    }
+  }, [turn]);
 
-    
   // -------- BONUS TIME --------
 
   // -------- CHECK IF TIMER IS ZERO --------
@@ -148,7 +156,11 @@ function App() {
       <main className="flex flex-col justify-between w-full h-screen overflow-hidden">
         <Board
           minutes={Math.floor(timer1 / 60 / 1000)}
-          seconds={Math.floor((timer1 / 1000) % 60)}
+          seconds={
+            Math.floor((timer1 / 1000) % 60) < 10
+              ? "0" + Math.floor((timer1 / 1000) % 60)
+              : Math.floor((timer1 / 1000) % 60)
+          }
           onClick={toggleTurn}
           player={false}
           turn={turn}
@@ -164,7 +176,11 @@ function App() {
 
         <Board
           minutes={Math.floor(timer2 / 60 / 1000)}
-          seconds={Math.floor((timer2 / 1000) % 60)}
+          seconds={
+            Math.floor((timer2 / 1000) % 60) < 10
+              ? "0" + Math.floor((timer2 / 1000) % 60)
+              : Math.floor((timer2 / 1000) % 60)
+          }
           onClick={toggleTurn}
           player={true}
           turn={!turn}

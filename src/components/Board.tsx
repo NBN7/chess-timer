@@ -4,7 +4,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   player: boolean;
   turn: boolean;
   minutes: number;
-  seconds: number;
+  seconds: number | string;
   gameStart: boolean;
 }
 
