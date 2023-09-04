@@ -23,8 +23,11 @@ export const ControlPad = memo(
         />
         {start ? (
           <>
-            <BsPauseFill onClick={onClick} size="35px" />
-            style={{ cursor: "pointer" }}
+            <BsPauseFill
+              onClick={onClick}
+              size="35px"
+              style={{ cursor: "pointer" }}
+            />
           </>
         ) : (
           <BsPlayFill

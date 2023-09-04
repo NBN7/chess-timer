@@ -22,7 +22,7 @@ export const Board = ({
       {...props}
       onClick={onClick}
       className={`flex items-center justify-center w-full h-[500px] ${
-        turn ? "disable" : "active"
+        turn ? "disable pointer-events-none" : "active"
       } ${player ? "rounded-b-2xl" : "rounded-t-2xl"} ${
         gameStart ? "" : "pointer-events-none"
       }`}

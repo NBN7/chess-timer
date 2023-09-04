@@ -124,6 +124,11 @@ function App() {
   }, [isTimer2Running]);
   // -------- TIMERS --------
 
+  // -------- BONUS TIME --------
+
+    
+  // -------- BONUS TIME --------
+
   // -------- CHECK IF TIMER IS ZERO --------
   useEffect(() => {
     if (timer1 === 0) {
