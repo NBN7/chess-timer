@@ -15,9 +15,11 @@ export const Board = ({
   minutes,
   seconds,
   gameStart,
+  ...props
 }: Props) => {
   return (
     <div
+      {...props}
       onClick={onClick}
       className={`flex items-center justify-center w-full h-[500px] ${
         turn ? "disable" : "active"

@@ -18,14 +18,18 @@ export const Settings = memo(
       <div className="flex items-center justify-center absolute w-full h-full backdrop-blur-sm">
         <div className="flex flex-col items-center w-[300px] h-[300px] bg-[#242424] rounded-2xl p-4">
           <div className="flex w-full justify-end">
-            <MdClose onClick={handleSettings} size="20px" />
+            <MdClose
+              onClick={handleSettings}
+              size="20px"
+              style={{ cursor: "pointer" }}
+            />
           </div>
 
           <div className="flex flex-col w-full h-full justify-center gap-4">
             {/* TIME OPTIONS */}
             <select
               onChange={handleTimeChange}
-              className="w-full p-4 rounded-2xl overflow-scroll"
+              className="w-full p-4 rounded-2xl overflow-scroll cursor-pointer"
               name="time"
             >
               <option defaultValue="">Time (minutes)</option>
@@ -40,7 +44,7 @@ export const Settings = memo(
             {/* BONUS OPTIONS */}
             <select
               onChange={handleBonusTimeChange}
-              className="w-full p-4 rounded-2xl overflow-scroll"
+              className="w-full p-4 rounded-2xl overflow-scroll cursor-pointer"
               name="time"
             >
               <option defaultValue="">Bonus time (seconds)</option>

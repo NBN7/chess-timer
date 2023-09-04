@@ -16,15 +16,28 @@ export const ControlPad = memo(
     console.log("render control pad with useCallback");
     return (
       <div className="w-full p-4 flex items-center justify-around">
-        <VscDebugRestart onClick={handleRestart} size="25px" />
+        <VscDebugRestart
+          onClick={handleRestart}
+          size="25px"
+          style={{ cursor: "pointer" }}
+        />
         {start ? (
           <>
             <BsPauseFill onClick={onClick} size="35px" />
+            style={{ cursor: "pointer" }}
           </>
         ) : (
-          <BsPlayFill onClick={onClick} size="35px" />
+          <BsPlayFill
+            onClick={onClick}
+            size="35px"
+            style={{ cursor: "pointer" }}
+          />
         )}
-        <MdSettings onClick={handleSettings} size="25px" />
+        <MdSettings
+          onClick={handleSettings}
+          size="25px"
+          style={{ cursor: "pointer" }}
+        />
       </div>
     );
   }
