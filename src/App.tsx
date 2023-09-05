@@ -5,36 +5,36 @@ import { ControlPad } from "./components/ControlPad";
 import { Settings } from "./components/Settings";
 
 function App() {
-  // turn : false = player 1
-  // turn : true = player 2
+  // turn = false : player 1
+  // turn = true : player 2
   const [turn, setTurn] = useState(false);
 
-  // isStarted : false = game stopped
-  // isStarted : true = game started
+  // isStarted = false : game stopped
+  // isStarted = true : game started
   const [isStarted, setIsStarted] = useState(false);
 
-  // settings : false = settings window hide
-  // settings : true = settings window show
+  // settings = false : settings window hide
+  // settings = true : settings window show
   const [settings, setSettings] = useState(false);
 
   // player 1 timer
   const [timer1, setTimer1] = useState(300000);
 
-  // isTimer1Running : false = player 1 timer is not running
-  // isTimer1Running : true = player 1 timer is running
+  // isTimer1Running = false : player 1 timer is not running
+  // isTimer1Running = true : player 1 timer is running
   const [isTimer1Running, setIsTimer1Running] = useState(false);
 
-  // isTimer2Running : false = player 2 timer is not running
-  // isTimer2Running : true = player 2 timer is running
+  // player 2 timer
   const [timer2, setTimer2] = useState(300000);
 
-  // isTimer2Running : true = player 2 timer is not running
+  // isTimer2Running = false : player 2 timer is not running
+  // isTimer2Running = true : player 2 timer is running
   const [isTimer2Running, setIsTimer2Running] = useState(false);
 
-  // selectedTime : default time
+  // selectedTime = default time
   const selectedTime = useRef(300000);
 
-  // selectedBonusTime : default bonus time
+  // selectedBonusTime = default bonus time
   const selectedBonusTime = useRef(3000);
 
   // player 1 timer interval
@@ -100,6 +100,14 @@ function App() {
     []
   );
 
+  useEffect(() => {
+    if (settings) {
+      setIsTimer1Running(false);
+      setIsTimer2Running(false);
+      setIsStarted(false);
+    }
+  }, [settings]);
+
   // -------- SETTINGS --------
 
   // -------- TIMERS --------
@@ -137,7 +145,7 @@ function App() {
 
   // -------- BONUS TIME --------
 
-  // -------- CHECK IF TIMER IS ZERO --------
+  // -------- TIMER CHECK --------
   useEffect(() => {
     if (timer1 === 0) {
       clearInterval(intervalRef1.current);
@@ -149,7 +157,7 @@ function App() {
       clearInterval(intervalRef2.current);
     }
   }, [timer2]);
-  // -------- CHECK IF TIMER IS ZERO --------
+  // -------- TIMER CHECK --------
 
   return (
     <>
@@ -164,14 +172,14 @@ function App() {
           onClick={toggleTurn}
           player={false}
           turn={turn}
-          gameStart={isStarted}
+          isStarted={isStarted}
         />
 
         <ControlPad
           handleRestart={handleRestart}
           handleSettings={handleSettings}
-          onClick={togglePause}
-          start={isStarted}
+          handleTogglePause={togglePause}
+          isStarted={isStarted}
         />
 
         <Board
@@ -184,7 +192,7 @@ function App() {
           onClick={toggleTurn}
           player={true}
           turn={!turn}
-          gameStart={isStarted}
+          isStarted={isStarted}
         />
 
         {settings && (

@@ -1,19 +1,20 @@
 import { memo } from "react";
 
-import { HTMLAttributes } from "react";
 import { BsPlayFill, BsPauseFill } from "react-icons/bs";
 import { VscDebugRestart } from "react-icons/vsc";
 import { MdSettings } from "react-icons/md";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  start: boolean;
+interface Props {
+  isStarted: boolean;
   handleRestart: Function;
+  handleTogglePause: Function;
   handleSettings: Function;
 }
 
 export const ControlPad = memo(
-  ({ start, onClick, handleRestart, handleSettings }: Props) => {
+  ({ isStarted, handleTogglePause, handleRestart, handleSettings }: Props) => {
     console.log("render control pad with useCallback");
+
     return (
       <div className="w-full p-4 flex items-center justify-around">
         <VscDebugRestart
@@ -21,17 +22,17 @@ export const ControlPad = memo(
           size="25px"
           style={{ cursor: "pointer" }}
         />
-        {start ? (
+        {isStarted ? (
           <>
             <BsPauseFill
-              onClick={onClick}
+              onClick={handleTogglePause}
               size="35px"
               style={{ cursor: "pointer" }}
             />
           </>
         ) : (
           <BsPlayFill
-            onClick={onClick}
+            onClick={handleTogglePause}
             size="35px"
             style={{ cursor: "pointer" }}
           />

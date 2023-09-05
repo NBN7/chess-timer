@@ -5,29 +5,27 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   turn: boolean;
   minutes: number;
   seconds: number | string;
-  gameStart: boolean;
+  isStarted: boolean;
 }
 
 export const Board = ({
   player,
   turn,
-  onClick,
   minutes,
   seconds,
-  gameStart,
+  isStarted,
   ...props
 }: Props) => {
   return (
     <div
       {...props}
-      onClick={onClick}
       className={`flex items-center justify-center w-full h-[500px] ${
         turn ? "disable pointer-events-none" : "active"
       } ${player ? "rounded-b-2xl" : "rounded-t-2xl"} ${
-        gameStart ? "" : "pointer-events-none"
+        isStarted ? "" : "pointer-events-none"
       }`}
     >
-      <span className={`${player ? "" : "rotate-180"} text-5xl`}>
+      <span className={`text-5xl ${player ? "" : "rotate-180"}`}>
         {minutes} {seconds}
       </span>
     </div>
