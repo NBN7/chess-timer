@@ -43,13 +43,57 @@ function App() {
   // player 2 timer interval
   const intervalRef2 = useRef<ReturnType<typeof setInterval>>();
 
+  // -------- TIMERS --------
+  useEffect(() => {
+    if (isTimer1Running) {
+      intervalRef1.current = setInterval(() => {
+        setTimer1((prev) => prev - 1000);
+      }, 1000);
+    } else {
+      clearInterval(intervalRef1.current);
+    }
+  }, [isTimer1Running]);
+
+  useEffect(() => {
+    if (isTimer2Running) {
+      intervalRef2.current = setInterval(() => {
+        setTimer2((prev) => prev - 1000);
+      }, 1000);
+    } else {
+      clearInterval(intervalRef2.current);
+    }
+  }, [isTimer2Running]);
+  // -------- TIMERS --------
+
+  // -------- BONUS TIME --------
+  useEffect(() => {
+    if (isStarted) {
+      if (turn) {
+        setTimer1((prev) => prev + selectedBonusTime.current);
+        return;
+      }
+      setTimer2((prev) => prev + selectedBonusTime.current);
+    }
+  }, [turn]);
+
+  // -------- BONUS TIME --------
+
+  // -------- TIMER CHECK --------
+  useEffect(() => {
+    if (timer1 === 0) {
+      clearInterval(intervalRef1.current);
+    }
+  }, [timer1]);
+
+  useEffect(() => {
+    if (timer2 === 0) {
+      clearInterval(intervalRef2.current);
+    }
+  }, [timer2]);
+  // -------- TIMER CHECK --------
+
   const toggleTurn = () => {
     setTurn((prev) => !prev);
-    if (isTimer1Running) {
-      setIsTimer1Running((prev) => !prev);
-      setIsTimer2Running((prev) => !prev);
-      return;
-    }
     setIsTimer1Running((prev) => !prev);
     setIsTimer2Running((prev) => !prev);
   };
@@ -109,56 +153,6 @@ function App() {
   }, [settings]);
 
   // -------- SETTINGS --------
-
-  // -------- TIMERS --------
-  useEffect(() => {
-    if (isTimer1Running) {
-      intervalRef1.current = setInterval(() => {
-        setTimer1((prev) => prev - 1000);
-      }, 1000);
-    } else {
-      clearInterval(intervalRef1.current);
-    }
-  }, [isTimer1Running]);
-
-  useEffect(() => {
-    if (isTimer2Running) {
-      intervalRef2.current = setInterval(() => {
-        setTimer2((prev) => prev - 1000);
-      }, 1000);
-    } else {
-      clearInterval(intervalRef2.current);
-    }
-  }, [isTimer2Running]);
-  // -------- TIMERS --------
-
-  // -------- BONUS TIME --------
-  useEffect(() => {
-    if (isStarted) {
-      if (turn) {
-        setTimer1((prev) => prev + selectedBonusTime.current);
-        return;
-      }
-      setTimer2((prev) => prev + selectedBonusTime.current);
-    }
-  }, [turn]);
-
-  // -------- BONUS TIME --------
-
-  // -------- TIMER CHECK --------
-  useEffect(() => {
-    if (timer1 === 0) {
-      clearInterval(intervalRef1.current);
-    }
-  }, [timer1]);
-
-  useEffect(() => {
-    if (timer2 === 0) {
-      clearInterval(intervalRef2.current);
-    }
-  }, [timer2]);
-  // -------- TIMER CHECK --------
-
   return (
     <>
       <main className="flex flex-col justify-between w-full h-screen overflow-hidden">
@@ -190,7 +184,7 @@ function App() {
               : Math.floor((timer2 / 1000) % 60)
           }
           onClick={toggleTurn}
-          player={true}
+          player
           turn={!turn}
           isStarted={isStarted}
         />

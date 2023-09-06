@@ -13,35 +13,45 @@ interface Props {
 
 export const ControlPad = memo(
   ({ isStarted, handleTogglePause, handleRestart, handleSettings }: Props) => {
-    console.log("render control pad with useCallback");
+    const controlPadClassName = "w-full p-4 flex items-center justify-around";
 
-    return (
-      <div className="w-full p-4 flex items-center justify-around">
-        <VscDebugRestart
-          onClick={handleRestart}
-          size="25px"
-          style={{ cursor: "pointer" }}
-        />
-        {isStarted ? (
-          <>
-            <BsPauseFill
+    const Icons = () => {
+      return (
+        <>
+          <VscDebugRestart
+            onClick={handleRestart}
+            size="25px"
+            style={{ cursor: "pointer" }}
+          />
+
+          {isStarted ? (
+            <>
+              <BsPauseFill
+                onClick={handleTogglePause}
+                size="35px"
+                style={{ cursor: "pointer" }}
+              />
+            </>
+          ) : (
+            <BsPlayFill
               onClick={handleTogglePause}
               size="35px"
               style={{ cursor: "pointer" }}
             />
-          </>
-        ) : (
-          <BsPlayFill
-            onClick={handleTogglePause}
-            size="35px"
+          )}
+
+          <MdSettings
+            onClick={handleSettings}
+            size="25px"
             style={{ cursor: "pointer" }}
           />
-        )}
-        <MdSettings
-          onClick={handleSettings}
-          size="25px"
-          style={{ cursor: "pointer" }}
-        />
+        </>
+      );
+    };
+
+    return (
+      <div className={controlPadClassName}>
+        <Icons />
       </div>
     );
   }
