@@ -46,9 +46,11 @@ function App() {
   // -------- TIMERS --------
   useEffect(() => {
     if (isTimer1Running) {
-      intervalRef1.current = setInterval(() => {
-        setTimer1((prev) => prev - 1000);
-      }, 1000);
+      if (timer1 > 0) {
+        intervalRef1.current = setInterval(() => {
+          setTimer1((prev) => prev - 1000);
+        }, 1000);
+      }
     } else {
       clearInterval(intervalRef1.current);
     }
@@ -56,9 +58,11 @@ function App() {
 
   useEffect(() => {
     if (isTimer2Running) {
-      intervalRef2.current = setInterval(() => {
-        setTimer2((prev) => prev - 1000);
-      }, 1000);
+      if (timer2 > 0) {
+        intervalRef2.current = setInterval(() => {
+          setTimer2((prev) => prev - 1000);
+        }, 1000);
+      }
     } else {
       clearInterval(intervalRef2.current);
     }
@@ -68,11 +72,13 @@ function App() {
   // -------- BONUS TIME --------
   useEffect(() => {
     if (isStarted) {
-      if (turn) {
+      if (turn && timer1 > 0) {
         setTimer1((prev) => prev + selectedBonusTime.current);
         return;
       }
-      setTimer2((prev) => prev + selectedBonusTime.current);
+      if (!turn && timer2 > 0) {
+        setTimer2((prev) => prev + selectedBonusTime.current);
+      }
     }
   }, [turn]);
 
