@@ -1,8 +1,17 @@
-import { useState, useEffect, useRef, useCallback, ChangeEvent } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  ChangeEvent,
+  lazy,
+  Suspense,
+} from "react";
 
 import { Board } from "./components/Board";
 import { ControlPad } from "./components/ControlPad";
-import { Settings } from "./components/Settings";
+const Settings = lazy(() => import("./components/Settings"));
+import { SettingsSkeleton } from "./components/SettingsSkeleton";
 
 function App() {
   // turn = false : player 1
@@ -161,7 +170,7 @@ function App() {
   // -------- SETTINGS --------
   return (
     <>
-      <main className="flex flex-col justify-between w-full h-screen overflow-hidden">
+      <main className="dark flex flex-col justify-between w-full h-screen overflow-hidden">
         <Board
           minutes={Math.floor(timer1 / 60 / 1000)}
           seconds={
@@ -196,11 +205,13 @@ function App() {
         />
 
         {settings && (
-          <Settings
-            handleSettings={handleSettings}
-            handleTimeChange={handleTimeChange}
-            handleBonusTimeChange={handleBonusTimeChange}
-          />
+          <Suspense fallback={<SettingsSkeleton />}>
+            <Settings
+              handleSettings={handleSettings}
+              handleTimeChange={handleTimeChange}
+              handleBonusTimeChange={handleBonusTimeChange}
+            />
+          </Suspense>
         )}
       </main>
     </>

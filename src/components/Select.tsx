@@ -6,7 +6,7 @@ interface Props extends HTMLAttributes<HTMLSelectElement> {
 
 export const Select = ({ children, ...props }: Props) => {
   const selectClassName =
-    "w-full p-4 rounded-2xl overflow-scroll cursor-pointer";
+    "appearance-none w-full h-[55px] p-4 rounded-2xl overflow-scroll cursor-pointer";
 
   return (
     <select {...props} className={selectClassName}>
