@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 
 import { useGame } from "./hooks/useGame";
+import { useSecondsParse } from "./hooks/useSecondsParse";
+import { useMinutesParse } from "./hooks/useMinutesParse";
 
 import { Board } from "./components/Board";
 import { ControlPad } from "./components/ControlPad";
@@ -22,15 +24,14 @@ function App() {
     handleBonusTimeChange,
   } = useGame();
 
+  const { secondsParse } = useSecondsParse();
+  const { minutesParse } = useMinutesParse();
+
   return (
     <main className="dark flex flex-col justify-between w-full h-screen overflow-hidden">
       <Board
-        minutes={Math.floor(timer1 / 60 / 1000)}
-        seconds={
-          Math.floor((timer1 / 1000) % 60) < 10
-            ? "0" + Math.floor((timer1 / 1000) % 60)
-            : Math.floor((timer1 / 1000) % 60)
-        }
+        minutes={minutesParse(timer1)}
+        seconds={secondsParse(timer1)}
         onClick={toggleTurn}
         player={false}
         turn={turn}
@@ -45,12 +46,8 @@ function App() {
       />
 
       <Board
-        minutes={Math.floor(timer2 / 60 / 1000)}
-        seconds={
-          Math.floor((timer2 / 1000) % 60) < 10
-            ? "0" + Math.floor((timer2 / 1000) % 60)
-            : Math.floor((timer2 / 1000) % 60)
-        }
+        minutes={minutesParse(timer2)}
+        seconds={secondsParse(timer2)}
         onClick={toggleTurn}
         player
         turn={!turn}
