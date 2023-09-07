@@ -3,7 +3,7 @@ import { HTMLAttributes } from "react";
 interface Props extends HTMLAttributes<HTMLDivElement> {
   player: boolean;
   turn: boolean;
-  minutes: number;
+  minutes: number | string;
   seconds: number | string;
   isStarted: boolean;
 }
