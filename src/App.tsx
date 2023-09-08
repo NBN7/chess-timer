@@ -1,13 +1,14 @@
 import { lazy, Suspense } from "react";
 
 import { useGame } from "./hooks/useGame";
-import { useSecondsParse } from "./hooks/useSecondsParse";
-import { useMinutesParse } from "./hooks/useMinutesParse";
 
 import { Board } from "./components/Board";
 import { ControlPad } from "./components/ControlPad";
 const Settings = lazy(() => import("./components/Settings"));
 import { SettingsSkeleton } from "./components/SettingsSkeleton";
+
+import { minutesParse } from "./utils/minutesParse";
+import { secondsParse } from "./utils/secondsParse";
 
 function App() {
   const {
@@ -23,9 +24,6 @@ function App() {
     handleTimeChange,
     handleBonusTimeChange,
   } = useGame();
-
-  const { secondsParse } = useSecondsParse();
-  const { minutesParse } = useMinutesParse();
 
   return (
     <main className="dark flex flex-col justify-between w-full h-screen overflow-hidden">
