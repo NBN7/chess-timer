@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 
 import { useGame } from "./hooks/useGame";
 
+import { AnimatePresence } from "framer-motion";
+
 import { Board } from "./components/Board";
 import { ControlPad } from "./components/ControlPad";
 const Settings = lazy(() => import("./components/Settings"));
@@ -51,16 +53,17 @@ function App() {
         turn={!turn}
         isStarted={isStarted}
       />
-
-      {isSettingsOpen && (
-        <Suspense fallback={<SettingsSkeleton />}>
-          <Settings
-            handleSettings={handleSettings}
-            handleTimeChange={handleTimeChange}
-            handleBonusTimeChange={handleBonusTimeChange}
-          />
-        </Suspense>
-      )}
+      <AnimatePresence>
+        {isSettingsOpen && (
+          <Suspense fallback={<SettingsSkeleton />}>
+            <Settings
+              handleSettings={handleSettings}
+              handleTimeChange={handleTimeChange}
+              handleBonusTimeChange={handleBonusTimeChange}
+            />
+          </Suspense>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
