@@ -57,6 +57,7 @@ function App() {
         isStarted={isStarted}
         isTimeShort={isTime2Short}
       />
+
       <AnimatePresence>
         {isSettingsOpen && (
           <Suspense fallback={<SettingsSkeleton />}>

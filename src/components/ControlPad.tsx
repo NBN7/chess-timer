@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { BsPlayFill, BsPauseFill } from "react-icons/bs";
 import { VscDebugRestart } from "react-icons/vsc";
 import { MdSettings } from "react-icons/md";
@@ -11,48 +9,51 @@ interface Props {
   handleSettings: Function;
 }
 
-export const ControlPad = memo(
-  ({ isStarted, handleTogglePause, handleRestart, handleSettings }: Props) => {
-    const controlPadClassName = "w-full p-4 flex items-center justify-around";
+export const ControlPad = ({
+  isStarted,
+  handleTogglePause,
+  handleRestart,
+  handleSettings,
+}: Props) => {
+  const controlPadClassName = "w-full p-4 flex items-center justify-around";
 
-    const Icons = () => {
-      return (
-        <>
-          <VscDebugRestart
-            onClick={handleRestart}
-            size="25px"
-            style={{ cursor: "pointer" }}
-          />
+  const Icons = () => {
+    return (
+      <>
+        <VscDebugRestart
+          onClick={handleRestart}
+          size="25px"
+          style={{ cursor: "pointer" }}
+        />
 
-          {isStarted ? (
-            <>
-              <BsPauseFill
-                onClick={handleTogglePause}
-                size="35px"
-                style={{ cursor: "pointer" }}
-              />
-            </>
-          ) : (
-            <BsPlayFill
+        {isStarted ? (
+          <>
+            <BsPauseFill
               onClick={handleTogglePause}
               size="35px"
               style={{ cursor: "pointer" }}
             />
-          )}
-
-          <MdSettings
-            onClick={handleSettings}
-            size="25px"
+          </>
+        ) : (
+          <BsPlayFill
+            onClick={handleTogglePause}
+            size="35px"
             style={{ cursor: "pointer" }}
           />
-        </>
-      );
-    };
+        )}
 
-    return (
-      <div className={controlPadClassName}>
-        <Icons />
-      </div>
+        <MdSettings
+          onClick={handleSettings}
+          size="25px"
+          style={{ cursor: "pointer" }}
+        />
+      </>
     );
-  }
-);
+  };
+
+  return (
+    <div className={controlPadClassName}>
+      <Icons />
+    </div>
+  );
+};
