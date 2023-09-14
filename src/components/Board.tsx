@@ -30,8 +30,8 @@ export const Board = ({
   const Title = () => {
     return (
       <motion.span
-        animate={isTimeShort && !turn ? { color: "#FF0000" } : ""}
-        transition={{ duration: 0.4 }}
+        animate={isTimeShort && !turn ? { color: ["#FF0000", "#fff"] } : ""}
+        transition={{ duration: 1.7, ease: "easeInOut"}}
         className={titleClassName}
       >
         {minutes} {seconds}
