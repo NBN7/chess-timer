@@ -14,7 +14,7 @@ export const useGame = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // player 1 timer
-  const [timer1, setTimer1] = useState(11000);
+  const [timer1, setTimer1] = useState(15000);
   const [isTime1Short, setIsTime1Short] = useState(false);
 
   // isTimer1Running = false : player 1 timer is not running
@@ -22,7 +22,7 @@ export const useGame = () => {
   const [isTimer1Running, setIsTimer1Running] = useState(false);
 
   // player 2 timer
-  const [timer2, setTimer2] = useState(11000);
+  const [timer2, setTimer2] = useState(15000);
   const [isTime2Short, setIsTime2Short] = useState(false);
 
   // isTimer2Running = false : player 2 timer is not running
@@ -30,7 +30,7 @@ export const useGame = () => {
   const [isTimer2Running, setIsTimer2Running] = useState(false);
 
   // selectedTime = default time
-  const selectedTime = useRef(300000);
+  const selectedTime = useRef(15000);
 
   // selectedBonusTime = default bonus time
   const selectedBonusTime = useRef(3000);
