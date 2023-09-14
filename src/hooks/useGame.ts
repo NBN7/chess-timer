@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback, ChangeEvent } from "react";
 
 export const useGame = () => {
-  // turn = false : represents the player who is
-  // currently playing
+  // turn = false : player 1 turn
+  // turn = true : player 2 turn
   const [turn, setTurn] = useState(false);
 
   // isStarted = false : game stopped
@@ -84,13 +84,19 @@ export const useGame = () => {
 
   // -------- TIMER CHECK --------
   useEffect(() => {
-    if (timer1 === 0) clearInterval(intervalRef1.current);
+    if (timer1 === 0) {
+      clearInterval(intervalRef1.current);
+      togglePause();
+    }
     if (timer1 <= 10000) setIsTime1Short(true);
     else setIsTime1Short(false);
   }, [timer1]);
 
   useEffect(() => {
-    if (timer2 === 0) clearInterval(intervalRef2.current);
+    if (timer2 === 0) {
+      clearInterval(intervalRef2.current);
+      togglePause();
+    }
     if (timer2 <= 10000) setIsTime2Short(true);
     else setIsTime2Short(false);
   }, [timer2]);
@@ -104,6 +110,7 @@ export const useGame = () => {
 
   // -------- CONTROL PAD --------
   const togglePause = useCallback(() => {
+    if (timer1 === 0 || timer2 === 0) return;
     if (isStarted) {
       setIsTimer1Running(false);
       setIsTimer2Running(false);
