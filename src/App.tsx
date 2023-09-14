@@ -15,7 +15,9 @@ import { secondsParse } from "./utils/secondsParse";
 function App() {
   const {
     timer1,
+    isTime1Short,
     timer2,
+    isTime2Short,
     turn,
     toggleTurn,
     isStarted,
@@ -36,6 +38,7 @@ function App() {
         player={false}
         turn={turn}
         isStarted={isStarted}
+        isTimeShort={isTime1Short}
       />
 
       <ControlPad
@@ -52,6 +55,7 @@ function App() {
         player
         turn={!turn}
         isStarted={isStarted}
+        isTimeShort={isTime2Short}
       />
       <AnimatePresence>
         {isSettingsOpen && (

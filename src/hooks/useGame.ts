@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback, ChangeEvent } from "react";
 
 export const useGame = () => {
-  // turn = false : player 1
-  // turn = true : player 2
+  // turn = false : represents the player who is
+  // currently playing
   const [turn, setTurn] = useState(false);
 
   // isStarted = false : game stopped
@@ -15,6 +15,7 @@ export const useGame = () => {
 
   // player 1 timer
   const [timer1, setTimer1] = useState(300000);
+  const [isTime1Short, setIsTime1Short] = useState(false);
 
   // isTimer1Running = false : player 1 timer is not running
   // isTimer1Running = true : player 1 timer is running
@@ -22,6 +23,7 @@ export const useGame = () => {
 
   // player 2 timer
   const [timer2, setTimer2] = useState(300000);
+  const [isTime2Short, setIsTime2Short] = useState(false);
 
   // isTimer2Running = false : player 2 timer is not running
   // isTimer2Running = true : player 2 timer is running
@@ -82,15 +84,15 @@ export const useGame = () => {
 
   // -------- TIMER CHECK --------
   useEffect(() => {
-    if (timer1 === 0) {
-      clearInterval(intervalRef1.current);
-    }
+    if (timer1 === 0) clearInterval(intervalRef1.current);
+    if (timer1 <= 10000) setIsTime1Short(true);
+    else setIsTime1Short(false);
   }, [timer1]);
 
   useEffect(() => {
-    if (timer2 === 0) {
-      clearInterval(intervalRef2.current);
-    }
+    if (timer2 === 0) clearInterval(intervalRef2.current);
+    if (timer2 <= 10000) setIsTime2Short(true);
+    else setIsTime2Short(false);
   }, [timer2]);
   // -------- TIMER CHECK --------
 
@@ -158,7 +160,9 @@ export const useGame = () => {
 
   return {
     timer1,
+    isTime1Short,
     timer2,
+    isTime2Short,
     turn,
     toggleTurn,
     isStarted,
