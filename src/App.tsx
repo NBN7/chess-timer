@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 
 import { useGame } from "./hooks/useGame";
+import { PLAYERS } from "./constants/player";
 
 import { AnimatePresence } from "framer-motion";
 
@@ -9,8 +10,7 @@ import { ControlPad } from "./components/ControlPad";
 const Settings = lazy(() => import("./components/Settings"));
 import { SettingsSkeleton } from "./components/SettingsSkeleton";
 
-import { minutesParse } from "./utils/minutesParse";
-import { secondsParse } from "./utils/secondsParse";
+import { minutesParse, secondsParse } from "./utils/parser";
 
 function App() {
   const {
@@ -35,7 +35,7 @@ function App() {
         minutes={minutesParse(timer1)}
         seconds={secondsParse(timer1)}
         onClick={toggleTurn}
-        player={false}
+        player={PLAYERS.PLAYER_1}
         turn={turn}
         isStarted={isStarted}
         isTimeShort={isTime1Short}
@@ -52,7 +52,7 @@ function App() {
         minutes={minutesParse(timer2)}
         seconds={secondsParse(timer2)}
         onClick={toggleTurn}
-        player
+        player={PLAYERS.PLAYER_2}
         turn={!turn}
         isStarted={isStarted}
         isTimeShort={isTime2Short}
