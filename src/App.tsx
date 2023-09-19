@@ -8,7 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import { Board } from "./components/board-timer";
 import { ControlPad } from "./components/control-pad";
 const Settings = lazy(() => import("./components/settings-modal"));
-import { SettingsSkeleton } from "./components/settings-modal-skeleton";
+import { SettingsSkeleton } from "./components/settings-skeleton";
 
 import { minutesParse, secondsParse } from "./utils/parser";
 

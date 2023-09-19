@@ -147,11 +147,13 @@ export const useGame = () => {
     setTimer1(parseInt(e.target.value));
     setTimer2(parseInt(e.target.value));
     selectedTime.current = parseInt(e.target.value);
+    handleRestartClick();
   }, []);
 
   const handleBonusTimeChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
       selectedBonusTime.current = parseInt(e.target.value);
+      handleRestartClick();
     },
     []
   );
