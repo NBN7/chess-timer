@@ -10,7 +10,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   turn: boolean;
   minutes: number | string;
   seconds: number | string;
-  isStarted: boolean;
+  isGameStarted: boolean;
   isTimeShort: boolean;
 }
 
@@ -19,22 +19,22 @@ export const Board = ({
   turn,
   minutes,
   seconds,
-  isStarted,
+  isGameStarted,
   isTimeShort,
   ...props
 }: Props) => {
   const boardClassName = `flex items-center justify-center w-full h-[500px] ${
     turn ? "disable pointer-events-none" : "active"
   } ${player === PLAYERS.PLAYER_1 ? "rounded-t-2xl" : "rounded-b-2xl"} ${
-    isStarted ? "" : "pointer-events-none"
+    isGameStarted ? "" : "pointer-events-none"
   }`;
 
   const titleClassName = `text-5xl ${
     player === PLAYERS.PLAYER_1 ? "rotate-180" : ""
   }`;
 
-  return (
-    <div {...props} className={boardClassName}>
+  const Title = () => {
+    return (
       <motion.span
         animate={isTimeShort && !turn ? { color: ["#FF0000", "#fff"] } : ""}
         transition={{ duration: 1.7, ease: "easeInOut" }}
@@ -42,6 +42,12 @@ export const Board = ({
       >
         {minutes} {seconds}
       </motion.span>
+    );
+  };
+
+  return (
+    <div {...props} className={boardClassName}>
+      <Title />
     </div>
   );
 };

@@ -20,11 +20,11 @@ function App() {
     isTime2Short,
     turn,
     toggleTurn,
-    isStarted,
-    handleRestart,
+    isGameStarted,
+    handleRestartClick,
     togglePause,
     isSettingsOpen,
-    handleSettings,
+    handleSettingsClick,
     handleTimeChange,
     handleBonusTimeChange,
   } = useGame();
@@ -37,15 +37,15 @@ function App() {
         onClick={toggleTurn}
         player={PLAYERS.PLAYER_1}
         turn={turn}
-        isStarted={isStarted}
+        isGameStarted={isGameStarted}
         isTimeShort={isTime1Short}
       />
 
       <ControlPad
-        handleRestart={handleRestart}
-        handleSettings={handleSettings}
+        handleRestartClick={handleRestartClick}
+        handleSettingsClick={handleSettingsClick}
         handleTogglePause={togglePause}
-        isStarted={isStarted}
+        isStarted={isGameStarted}
       />
 
       <Board
@@ -54,7 +54,7 @@ function App() {
         onClick={toggleTurn}
         player={PLAYERS.PLAYER_2}
         turn={!turn}
-        isStarted={isStarted}
+        isGameStarted={isGameStarted}
         isTimeShort={isTime2Short}
       />
 
@@ -62,7 +62,7 @@ function App() {
         {isSettingsOpen && (
           <Suspense fallback={<SettingsSkeleton />}>
             <Settings
-              handleSettings={handleSettings}
+              handleSettingsClick={handleSettingsClick}
               handleTimeChange={handleTimeChange}
               handleBonusTimeChange={handleBonusTimeChange}
             />

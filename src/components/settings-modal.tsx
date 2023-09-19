@@ -1,19 +1,19 @@
 import { memo, ChangeEventHandler } from "react";
 import { motion } from "framer-motion";
 
-import { Select } from "./Select";
+import { Select } from "./select";
 import { TIME_OPTIONS } from "../constants/time-options";
 
 import { MdClose } from "react-icons/md";
 
 interface Props {
-  handleSettings: Function;
+  handleSettingsClick: Function;
   handleTimeChange: ChangeEventHandler<HTMLSelectElement>;
   handleBonusTimeChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
 const Settings = memo(
-  ({ handleSettings, handleTimeChange, handleBonusTimeChange }: Props) => {
+  ({ handleSettingsClick, handleTimeChange, handleBonusTimeChange }: Props) => {
     return (
       <div className="flex items-center justify-center absolute w-full h-full backdrop-blur-sm p-2">
         <motion.div
@@ -29,7 +29,7 @@ const Settings = memo(
         >
           <div className="flex w-full justify-end">
             <MdClose
-              onClick={handleSettings}
+              onClick={handleSettingsClick}
               size="20px"
               style={{ cursor: "pointer" }}
             />

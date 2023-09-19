@@ -4,23 +4,23 @@ import { MdSettings } from "react-icons/md";
 
 interface Props {
   isStarted: boolean;
-  handleRestart: Function;
+  handleRestartClick: Function;
   handleTogglePause: Function;
-  handleSettings: Function;
+  handleSettingsClick: Function;
 }
 
 export const ControlPad = ({
   isStarted,
   handleTogglePause,
-  handleRestart,
-  handleSettings,
+  handleRestartClick,
+  handleSettingsClick,
 }: Props) => {
   const controlPadClassName = "w-full p-4 flex items-center justify-around";
 
   return (
     <div className={controlPadClassName}>
       <VscDebugRestart
-        onClick={handleRestart}
+        onClick={handleRestartClick}
         size="25px"
         style={{ cursor: "pointer" }}
       />
@@ -42,7 +42,7 @@ export const ControlPad = ({
       )}
 
       <MdSettings
-        onClick={handleSettings}
+        onClick={handleSettingsClick}
         size="25px"
         style={{ cursor: "pointer" }}
       />

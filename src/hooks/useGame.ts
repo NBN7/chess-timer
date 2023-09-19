@@ -5,16 +5,16 @@ export const useGame = () => {
   // turn = true : player 2 turn
   const [turn, setTurn] = useState(false);
 
-  // isStarted = false : game stopped
-  // isStarted = true : game started
-  const [isStarted, setIsStarted] = useState(false);
+  // isGameStarted = false : game stopped
+  // isGameStarted = true : game started
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
-  // settings = false : settings window hide
-  // settings = true : settings window show
+  // isSettingsOpen = false : settings window hide
+  // isSettingsOpen = true : settings window show
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // player 1 timer
-  const [timer1, setTimer1] = useState(60000);
+  const [timer1, setTimer1] = useState(300000);
   const [isTime1Short, setIsTime1Short] = useState(false);
 
   // isTimer1Running = false : player 1 timer is not running
@@ -22,7 +22,7 @@ export const useGame = () => {
   const [isTimer1Running, setIsTimer1Running] = useState(false);
 
   // player 2 timer
-  const [timer2, setTimer2] = useState(60000);
+  const [timer2, setTimer2] = useState(300000);
   const [isTime2Short, setIsTime2Short] = useState(false);
 
   // isTimer2Running = false : player 2 timer is not running
@@ -30,7 +30,7 @@ export const useGame = () => {
   const [isTimer2Running, setIsTimer2Running] = useState(false);
 
   // selectedTime = default time
-  const selectedTime = useRef(60000);
+  const selectedTime = useRef(300000);
 
   // selectedBonusTime = default bonus time
   const selectedBonusTime = useRef(3000);
@@ -69,7 +69,7 @@ export const useGame = () => {
 
   // -------- BONUS TIME --------
   useEffect(() => {
-    if (isStarted) {
+    if (isGameStarted) {
       if (turn && timer1 > 0) {
         setTimer1((prev) => prev + selectedBonusTime.current);
         return;
@@ -79,25 +79,26 @@ export const useGame = () => {
       }
     }
   }, [turn]);
-
   // -------- BONUS TIME --------
 
   // -------- TIMER CHECK --------
   useEffect(() => {
     if (timer1 === 0) {
       clearInterval(intervalRef1.current);
+      setIsGameStarted(false);
       togglePause();
     }
-    if (timer1 <= selectedTime.current * 0.15) setIsTime1Short(true);
+    if (timer1 <= selectedTime.current * 0.2) setIsTime1Short(true);
     else setIsTime1Short(false);
   }, [timer1]);
 
   useEffect(() => {
     if (timer2 === 0) {
       clearInterval(intervalRef2.current);
+      setIsGameStarted(false);
       togglePause();
     }
-    if (timer2 <= selectedTime.current * 0.15) setIsTime2Short(true);
+    if (timer2 <= selectedTime.current * 0.2) setIsTime2Short(true);
     else setIsTime2Short(false);
   }, [timer2]);
   // -------- TIMER CHECK --------
@@ -109,35 +110,35 @@ export const useGame = () => {
   };
 
   // -------- CONTROL PAD --------
-  const togglePause = useCallback(() => {
+  const togglePause = () => {
     if (timer1 === 0 || timer2 === 0) return;
-    if (isStarted) {
+    if (isGameStarted) {
       setIsTimer1Running(false);
       setIsTimer2Running(false);
-      setIsStarted((prev) => !prev);
+      setIsGameStarted((prev) => !prev);
       return;
     }
-    setIsStarted((prev) => !prev);
+    setIsGameStarted((prev) => !prev);
     if (!turn) {
       setIsTimer1Running((prev) => !prev);
     } else {
       setIsTimer2Running((prev) => !prev);
     }
-  }, [isStarted]);
+  };
 
-  const handleRestart = useCallback(() => {
+  const handleRestartClick = useCallback(() => {
     setTimer1(selectedTime.current);
     setTimer2(selectedTime.current);
 
     setIsTimer1Running(false);
     setIsTimer2Running(false);
-    setIsStarted(false);
+    setIsGameStarted(false);
     setTurn(false);
   }, []);
 
-  const handleSettings = useCallback(() => {
+  const handleSettingsClick = useCallback(() => {
     setIsSettingsOpen((prev) => !prev);
-  }, []);
+  }, [isSettingsOpen]);
 
   // -------- CONTROL PAD --------
 
@@ -159,7 +160,7 @@ export const useGame = () => {
     if (isSettingsOpen) {
       setIsTimer1Running(false);
       setIsTimer2Running(false);
-      setIsStarted(false);
+      setIsGameStarted(false);
     }
   }, [isSettingsOpen]);
 
@@ -172,11 +173,11 @@ export const useGame = () => {
     isTime2Short,
     turn,
     toggleTurn,
-    isStarted,
-    handleRestart,
+    isGameStarted,
+    handleRestartClick,
     togglePause,
     isSettingsOpen,
-    handleSettings,
+    handleSettingsClick,
     handleTimeChange,
     handleBonusTimeChange,
   };
