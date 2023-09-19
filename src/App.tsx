@@ -1,14 +1,14 @@
 import { lazy, Suspense } from "react";
 
 import { useGame } from "./hooks/useGame";
-import { PLAYERS } from "./constants/player";
+import { PLAYERS } from "./constants/players";
 
 import { AnimatePresence } from "framer-motion";
 
-import { Board } from "./components/Board";
-import { ControlPad } from "./components/ControlPad";
-const Settings = lazy(() => import("./components/Settings"));
-import { SettingsSkeleton } from "./components/SettingsSkeleton";
+import { Board } from "./components/board-timer";
+import { ControlPad } from "./components/control-pad";
+const Settings = lazy(() => import("./components/settings-modal"));
+import { SettingsSkeleton } from "./components/settings-modal-skeleton";
 
 import { minutesParse, secondsParse } from "./utils/parser";
 

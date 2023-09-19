@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { HTMLAttributes } from "react";
 
-import { PLAYERS } from "../constants/player";
+import { PLAYERS } from "../constants/players";
 
 type Player = typeof PLAYERS.PLAYER_1 | typeof PLAYERS.PLAYER_2;
 
@@ -33,8 +33,8 @@ export const Board = ({
     player === PLAYERS.PLAYER_1 ? "rotate-180" : ""
   }`;
 
-  const Title = () => {
-    return (
+  return (
+    <div {...props} className={boardClassName}>
       <motion.span
         animate={isTimeShort && !turn ? { color: ["#FF0000", "#fff"] } : ""}
         transition={{ duration: 1.7, ease: "easeInOut" }}
@@ -42,12 +42,6 @@ export const Board = ({
       >
         {minutes} {seconds}
       </motion.span>
-    );
-  };
-
-  return (
-    <div {...props} className={boardClassName}>
-      <Title />
     </div>
   );
 };

@@ -17,43 +17,35 @@ export const ControlPad = ({
 }: Props) => {
   const controlPadClassName = "w-full p-4 flex items-center justify-around";
 
-  const Icons = () => {
-    return (
-      <>
-        <VscDebugRestart
-          onClick={handleRestart}
-          size="25px"
-          style={{ cursor: "pointer" }}
-        />
+  return (
+    <div className={controlPadClassName}>
+      <VscDebugRestart
+        onClick={handleRestart}
+        size="25px"
+        style={{ cursor: "pointer" }}
+      />
 
-        {isStarted ? (
-          <>
-            <BsPauseFill
-              onClick={handleTogglePause}
-              size="35px"
-              style={{ cursor: "pointer" }}
-            />
-          </>
-        ) : (
-          <BsPlayFill
+      {isStarted ? (
+        <>
+          <BsPauseFill
             onClick={handleTogglePause}
             size="35px"
             style={{ cursor: "pointer" }}
           />
-        )}
-
-        <MdSettings
-          onClick={handleSettings}
-          size="25px"
+        </>
+      ) : (
+        <BsPlayFill
+          onClick={handleTogglePause}
+          size="35px"
           style={{ cursor: "pointer" }}
         />
-      </>
-    );
-  };
+      )}
 
-  return (
-    <div className={controlPadClassName}>
-      <Icons />
+      <MdSettings
+        onClick={handleSettings}
+        size="25px"
+        style={{ cursor: "pointer" }}
+      />
     </div>
   );
 };
