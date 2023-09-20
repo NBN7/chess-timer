@@ -23,7 +23,7 @@ export const Board = ({
   isTimeShort,
   ...props
 }: Props) => {
-  const boardClassName = `flex items-center justify-center w-full h-[500px] ${
+  const boardClassName = `flex items-center justify-center w-full h-[500px] cursor-pointer ${
     turn ? "disable pointer-events-none" : "active"
   } ${player === PLAYERS.PLAYER_1 ? "rounded-t-2xl" : "rounded-b-2xl"} ${
     isGameStarted ? "" : "pointer-events-none"
